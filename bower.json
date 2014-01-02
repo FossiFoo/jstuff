@@ -2,7 +2,8 @@
   "name": "jstuff",
   "private": true,
   "dependencies": {
-    "jquery": "~1.10.2"
+    "jquery": "~1.10.2",
+    "kineticjs": "http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.7.4.min.js"
   },
   "devDependencies": {}
 }
