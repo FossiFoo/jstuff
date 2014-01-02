@@ -1,6 +1,6 @@
 'use strict';
 
-function foo() {
+var foo = function() {
 
     var totalWidth = window.innerWidth;
     var totalHeight = window.innerHeight;
@@ -16,22 +16,34 @@ function foo() {
         clearBeforeDraw: true
     });
 
-    var starCount = 3;
+    var initCount = 1;
+    var starCount = 0;
     var stars = [];
+    var rainbow = ["purple", "blue", "green", "yellow", "orange", "red"];
 
-    for (var i = 0; i < starCount; i++) {
-        var starSize = minSize / 2 - 50;
-        stars[i] = new Kinetic.Star({
+    var makeAStar = function() {
+        var i = starCount;
+        stars[starCount] = new Kinetic.Star({
             numPoints: 14,
             x: totalWidth / 2,
             y: totalHeight / 2,
-            innerRadius: starSize - 60 - i * 80,
-            outerRadius: starSize - i * 80,
-            fill: i%2 === 0 ? 'yellow' : 'red',
+            innerRadius: starSize - 40 - i * 60,
+            outerRadius: starSize - i * 60,
+            // fill: rainbow[i],
+           fillLinearGradientStartPoint: [-50, -50],
+          fillLinearGradientEndPoint: [50, 50],
+           fillLinearGradientColorStops: [0, rainbow[i], 1, rainbow[i+1]],
             stroke: 'black',
             strokeWidth: 2
         });
-        layer.add(stars[i]);
+        layer.add(stars[starCount]);
+        // stars[i].moveToTop();
+        starCount++;
+    };
+
+    var starSize = minSize / 2 - 50;
+    for (var i = 0; i < initCount; i++) {
+        makeAStar();
     }
 
     // add the layer to the stage
@@ -43,11 +55,23 @@ function foo() {
         var scale = Math.sin(frame.time * 2 * Math.PI / 2000) /10 + 1;
         for (var i = 0; i < starCount; i++) {
             stars[i].rotate(i%2 === 0 ? angleDiff : -angleDiff);
-            stars[i].setScale(i%2 === 0 ? 1 : scale);
+            stars[i].setScale(i%2 === 0 ? scale : scale);
         }
     }, layer);
 
-    anim.start();
-}
+    $('#button1').click(function() {
+        var isRunning = anim.isRunning();
+        if (isRunning) {
+            $(this).text('Weiter');
+            anim.stop();
+        } else {
+            $(this).text('STOP!');
+            anim.start();
+        }
+    });
 
+    $('#button2').click(function() {
+        makeAStar();
+    });
+};
 foo();

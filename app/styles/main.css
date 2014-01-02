@@ -12,6 +12,20 @@ body {
     right: 0;
 }
 
+.bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    background-color: darkgrey;
+
+    height: 40px;
+    line-height: 40px;
+}
+
+
+
 .browsehappy {
     margin: 0.2em 0;
     background: #ccc;
