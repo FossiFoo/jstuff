@@ -4,7 +4,7 @@ body {
     color: #333;
 }
 
-#container {
+.container {
     position: absolute;
     top: 0;
     bottom: 0;
