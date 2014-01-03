@@ -19,20 +19,22 @@ var foo = function() {
     var initCount = 1;
     var starCount = 0;
     var stars = [];
-    var rainbow = ["purple", "blue", "green", "yellow", "orange", "red"];
+    var rainbow = ['purple', 'blue', 'green', 'yellow', 'orange', 'red'];
 
     var makeAStar = function() {
         var i = starCount;
+        var radius = starSize - i * 60;
         stars[starCount] = new Kinetic.Star({
             numPoints: 14,
             x: totalWidth / 2,
             y: totalHeight / 2,
-            innerRadius: starSize - 40 - i * 60,
-            outerRadius: starSize - i * 60,
-            // fill: rainbow[i],
-           fillLinearGradientStartPoint: [-50, -50],
-          fillLinearGradientEndPoint: [50, 50],
-           fillLinearGradientColorStops: [0, rainbow[i], 1, rainbow[i+1]],
+            innerRadius: radius - 80,
+            outerRadius: radius,
+            fillRadialGradientStartPoint: 0,
+            fillRadialGradientStartRadius: radius - 80,
+            fillRadialGradientEndPoint: 0,
+            fillRadialGradientEndRadius: radius,
+            fillRadialGradientColorStops: [1, rainbow[i], 0, rainbow[i+1]],
             stroke: 'black',
             strokeWidth: 2
         });
@@ -55,7 +57,7 @@ var foo = function() {
         var scale = Math.sin(frame.time * 2 * Math.PI / 2000) /10 + 1;
         for (var i = 0; i < starCount; i++) {
             stars[i].rotate(i%2 === 0 ? angleDiff : -angleDiff);
-            stars[i].setScale(i%2 === 0 ? scale : scale);
+            //stars[i].setScale(i%2 === 0 ? scale : scale);
         }
     }, layer);
 
